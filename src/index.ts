@@ -6,6 +6,7 @@ const createWindow = () => {
     width: 1280,
     height: 720,
     title: "Transmission",
+
     // fullscreen: true,
     // kiosk: true,
     // visualEffectState: "active",
@@ -31,39 +32,56 @@ const createWindow = () => {
   win.on('page-title-updated', function(e) {
     e.preventDefault()
   });
+  
   return win
       
 };
 
-app.on("login", (event, webContents, request, authInfo, callback) => {
-  event.preventDefault();
-  callback("transmission", "");
-  // createAuthPrompt().then(credentials => {
-  //   callback("transmission", "Aranciata1!");
-  // });
-});
 
-function createAuthPrompt() {
-  const authPromptWin = new BrowserWindow();
-  authPromptWin.loadFile("auth-form.html"); // load your html form
-
-  return new Promise((resolve, reject) => {
-    ipcMain.once("form-submission", (event, username, password) => {
-      authPromptWin.close();
-      const credentials = {
-        username,
-        password
-      };
-      resolve(credentials);
-    });
+async function createAuthPrompt(parent: BrowserWindow) {
+  const authPromptWin = new BrowserWindow({
+    width: 280,
+    height: 220,
+    modal: true,
+    parent,
+    webPreferences: {
+      // nodeIntegration: false,
+      // contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js')
+    }
   });
-}
+  authPromptWin.loadFile( path.join(__dirname, "./public/auth-form.html") ); // load your html form
+
+  return new Promise<any>(resolve => {
+
+    ipcMain.once("log-in-attempt", (event, formData: {username: string, password: string}) => {
+      
+      resolve(formData);
+      authPromptWin.destroy();
+    })
+  })
+    
+  }
+
+
 
 app.whenReady().then(async () => {
 
   const win = createWindow();
-  win.webContents.executeJavaScript('console.log("test")')
+  app.on("login", async (event, webContents, request, authInfo, callback) => {
+    event.preventDefault();
+    // createAuthPrompt().then((credentials: {username: string, password: string}) => {
+      //   console.log(credentials)
+      //   callback(credentials.username, credentials.password);
+      // });
+      const formData = await createAuthPrompt(win);
+      console.log( formData);
+      callback(formData.username, formData.password);
+      // callback("transmission", "Aranciata1!");
+  });
+
   // note: your contextMenu, Tooltip and Title code will go here!
+
 })
 
 
