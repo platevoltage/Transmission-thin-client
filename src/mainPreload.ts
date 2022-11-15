@@ -12,8 +12,10 @@ document.addEventListener('dragover', (e) => {
 });
 
 document.addEventListener('drop', (e: DragEvent) => {
-  const fileList = e.dataTransfer?.files
-  uploadTorrent(fileList);
+  if (e.dataTransfer) {
+    const fileList: FileList = e.dataTransfer.files
+    uploadTorrent(fileList);
+  }
 });
 
 ipcRenderer.on("addFile", (e, data) => {
@@ -24,7 +26,7 @@ ipcRenderer.on("addFile", (e, data) => {
 
 })
 
-function uploadTorrent(fileList) {
+function uploadTorrent(fileList: FileList) {
   const openFileButton = document.getElementById('toolbar-open');
   const fileUploadElement: any = document.getElementById('torrent_upload_file');
   openFileButton!.click();
