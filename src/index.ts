@@ -10,17 +10,6 @@ const createWindow = () => {
     height: 720,
     title: "Transmission",
 
-    // fullscreen: true,
-    // kiosk: true,
-    // visualEffectState: "active",
-    // vibrancy: 'sidebar',
-    // resizable: false,
-    // maximizable: false,
-    // movable: false,
-    // titleBarStyle: "hidden",
-    // useContentSize: true,
-    // frame: false,
-    // show: false,
     webPreferences: {
       // nodeIntegration: false,
       // contextIsolation: true,
@@ -29,13 +18,15 @@ const createWindow = () => {
   });
 
   win.loadURL('http://10.0.0.3:9091/transmission/web/');
-  // win.loadFile('./index.html')
+
 
 
   win.on('page-title-updated', function(e) {
     e.preventDefault()
   });
-  
+
+
+
   return win
       
 };
