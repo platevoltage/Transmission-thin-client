@@ -77,7 +77,6 @@ app.whenReady().then(async () => {
           callback(formData.username, formData.password);
         } else {
           const preferences = JSON.parse(data);
-          console.log(preferences)
           callback(preferences.username, preferences.password);
           triedAutoLogin = true
         }
@@ -105,8 +104,6 @@ app.whenReady().then(async () => {
 
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
 
