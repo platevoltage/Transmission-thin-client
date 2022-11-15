@@ -1,5 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
+import * as fs from 'fs';
+
+let triedAutoLogin = false;
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -57,6 +60,8 @@ async function createAuthPrompt(parent: BrowserWindow) {
     ipcMain.once("log-in-attempt", (event, formData: {username: string, password: string}) => {
       
       resolve(formData);
+      
+      fs.writeFileSync(`${app.getPath("userData")}/preferences.json`, JSON.stringify(formData))
       authPromptWin.destroy();
     })
   })
@@ -69,15 +74,25 @@ app.whenReady().then(async () => {
 
   const win = createWindow();
   app.on("login", async (event, webContents, request, authInfo, callback) => {
-    event.preventDefault();
-    // createAuthPrompt().then((credentials: {username: string, password: string}) => {
-      //   console.log(credentials)
-      //   callback(credentials.username, credentials.password);
-      // });
-      const formData = await createAuthPrompt(win);
-      console.log( formData);
-      callback(formData.username, formData.password);
-      // callback("transmission", "Aranciata1!");
+      event.preventDefault();
+
+      fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
+        
+        if (err || triedAutoLogin) {
+          console.error(err)
+          const formData = await createAuthPrompt(win);
+          console.log( formData);
+          callback(formData.username, formData.password);
+        } else {
+          const preferences = JSON.parse(data);
+          console.log(preferences)
+          callback(preferences.username, preferences.password);
+          triedAutoLogin = true
+        }
+      })
+
+      
+
   });
 
   // note: your contextMenu, Tooltip and Title code will go here!
