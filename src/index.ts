@@ -24,7 +24,7 @@ const createWindow = () => {
     webPreferences: {
       // nodeIntegration: false,
       // contextIsolation: true,
-      // preload: path.join(__dirname, 'extensionScript.js')
+      preload: path.join(__dirname, 'mainPreload.js')
     }
   });
 
@@ -39,6 +39,21 @@ const createWindow = () => {
   return win
       
 };
+
+function createUploadPrompt(parent: BrowserWindow) {
+  const authPromptWin = new BrowserWindow({
+    width: 280,
+    height: 220,
+    modal: true,
+    parent,
+    webPreferences: {
+      // nodeIntegration: false,
+      // contextIsolation: true,
+      // preload: path.join(__dirname, 'preload.js')
+    }
+  })
+  authPromptWin.loadFile( path.join(__dirname, "./public/upload-form.html") );
+}
 
 
 async function createAuthPrompt(parent: BrowserWindow) {
@@ -73,6 +88,7 @@ async function createAuthPrompt(parent: BrowserWindow) {
 app.whenReady().then(async () => {
 
   const win = createWindow();
+  // const uploadWindow = createUploadPrompt(win);
   app.on("login", async (event, webContents, request, authInfo, callback) => {
       event.preventDefault();
 
@@ -81,7 +97,7 @@ app.whenReady().then(async () => {
         if (err || triedAutoLogin) {
           console.error(err)
           const formData = await createAuthPrompt(win);
-          console.log( formData);
+   
           callback(formData.username, formData.password);
         } else {
           const preferences = JSON.parse(data);
@@ -95,9 +111,21 @@ app.whenReady().then(async () => {
 
   });
 
-  app.on("open-file", (event, path) => {
+  app.on("open-file", (event: any, path) => {
     event.preventDefault()
-    console.log(path)
+
+    fs.readFile(path, (err, file) => {
+      if (err) {
+        console.error(err)
+      } else {
+        // const dataTransfer = new DataTransfer()
+        // console.log(file.toString())
+
+        // const fileObject = new File([file.toString()], "test.torrent");
+
+        win.webContents.send("addFile", file)
+      }
+    })
   })
 
   // note: your contextMenu, Tooltip and Title code will go here!

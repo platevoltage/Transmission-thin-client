@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" method="post" id="torrent_upload_form" enctype="multipart/form-data" target="torrent_upload_frame" autocomplete="off">
+        <div class="dialog_message">
+            <label for="torrent_upload_file">Please select a torrent file to upload:</label>
+                <input type="file" name="torrent_files[]" id="torrent_upload_file" multiple="multiple" value="">
+            <label for="torrent_upload_url">Or enter a URL:</label>
+                <input type="url" id="torrent_upload_url" value="">
+            <label id="add-dialog-folder-label" for="add-dialog-folder-input">Destination folder  <i>(735.6 GB Free)</i>:</label>
+                <input type="text" id="add-dialog-folder-input" value="/media/disk1/Downloads">
+                <input type="checkbox" id="torrent_auto_start" checked="checked">
+            <label for="torrent_auto_start" id="auto_start_label">Start when added</label>
+        </div>
+        <a href="#upload" id="upload_confirm_button">Upload</a>
+        <a href="#cancel" id="upload_cancel_button">Cancel</a>
+    </form>
+</body>
+</html>
