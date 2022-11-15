@@ -13,14 +13,15 @@ contextBridge.exposeInMainWorld("api", {
 });
 
 ipcRenderer.on("addFile", (e, data) => {
-  let fileUploadElement: any = document.getElementById('torrent_upload_file');
-  console.log(fileUploadElement.files);
-
+  const openFileButton = document.getElementById('toolbar-open');
+  const fileUploadElement: any = document.getElementById('torrent_upload_file');
+  openFileButton!.click();
   const dataTransfer = new DataTransfer()
   const file = new File([data], "test.torrent")
-  // file.path = ""
   dataTransfer.items.add( file );
   fileUploadElement.files = dataTransfer.files;
+  const uploadButton = document.getElementById('upload_confirm_button');
+  uploadButton!.click();
 
 })
 
