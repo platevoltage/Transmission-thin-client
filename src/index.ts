@@ -95,6 +95,11 @@ app.whenReady().then(async () => {
 
   });
 
+  app.on("open-file", (event, path) => {
+    event.preventDefault()
+    console.log(path)
+  })
+
   // note: your contextMenu, Tooltip and Title code will go here!
 
 })
