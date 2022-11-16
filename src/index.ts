@@ -17,7 +17,7 @@ const createWindow = () => {
     }
   });
 
-  win.loadURL('http://10.0.0.3:9091/transmission/web/');
+  
 
 
 
@@ -60,23 +60,38 @@ async function createAuthPrompt(parent: BrowserWindow) {
   }
 
 
-
+let preferences: {
+  ip: string,
+  username: string,
+  password: string
+}
 app.whenReady().then(async () => {
-
   const win = createWindow();
+  fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
+    if (err) {
+      const formData = await createAuthPrompt(win);
+      win.loadURL(`http://${formData.ip}:9091/transmission/web/`);
+    } else {
+      preferences = JSON.parse(data);
+      win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
+    }
+  });
+
 
   app.on("login", async (event, webContents, request, authInfo, callback) => {
+      
       event.preventDefault();
 
       fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
-        
+        // console.log(app.getPath("userData"), data)
         if (err || triedAutoLogin) {
           console.error(err)
           const formData = await createAuthPrompt(win);
    
           callback(formData.username, formData.password);
         } else {
-          const preferences = JSON.parse(data);
+          
+          preferences = JSON.parse(data);
           callback(preferences.username, preferences.password);
           triedAutoLogin = true
         }
