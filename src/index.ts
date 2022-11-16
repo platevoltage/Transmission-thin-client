@@ -43,7 +43,7 @@ async function createAuthPrompt(parent: BrowserWindow) {
     webPreferences: {
       // nodeIntegration: false,
       // contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'loginPreload.js')
     }
   });
   authPromptWin.loadFile( path.join(__dirname, "./public/auth-form.html") ); // load your html form
@@ -84,13 +84,15 @@ app.whenReady().then(async () => {
       }
     }
   });
-  fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      // console.log("data", data);
-      win.webContents.send("getCSS", data);
-    }
+  win.on("ready-to-show", () => {
+    fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        // console.log("data", data);
+        win.webContents.send("getCSS", data);
+      }
+    })
   })
 
 
