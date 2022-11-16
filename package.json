@@ -1,5 +1,5 @@
 {
-  "name": "youtube-smarttv-emu",
+  "name": "Transmission-Thin-Client",
   "version": "1.0.0",
   "description": "",
   "author": "Garrett Corbin <jgarrettcorbin@gmail.com> (https://jgarrettcorbin.com)",
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/platevoltage/youtube-smarttv-emu.git"
+    "url": "git+https://github.com/platevoltage/Transmission-thin-client.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/platevoltage/youtube-smarttv-emu/issues"
+    "url": "https://github.com/platevoltage/Transmission-thin-client/issues"
   },
-  "homepage": "https://github.com/platevoltage/youtube-smarttv-emu#readme",
+  "homepage": "https://github.com/platevoltage/Transmission-thin-client#readme",
   "devDependencies": {
 
     "deb": "^0.2.1",
