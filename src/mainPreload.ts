@@ -1,8 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
-ipcRenderer.on("getCSS", (event, styleSheet) => {
-  console.log(styleSheet)
-  setTimeout(() => {
+ipcRenderer.on("getCSS", (_event, styleSheet) => {
+
     const head = document.querySelector('head');
     const link = document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
@@ -39,7 +38,7 @@ ipcRenderer.on("getCSS", (event, styleSheet) => {
     swapIconWithBootstrap("inspector-tab-peers", "bi bi-wrench");
     swapIconWithBootstrap("inspector-tab-trackers", "bi bi-cone-striped");
     swapIconWithBootstrap("inspector-tab-files", "bi bi-chevron-bar-contract");
-  },100)
+  
 
 });
 contextBridge.exposeInMainWorld("api", {
