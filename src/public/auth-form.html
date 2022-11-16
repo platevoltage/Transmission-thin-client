@@ -4,24 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./mainStyle.css">
+    <link rel="stylesheet" href="./authStyle.css">
     <title>Document</title>
 </head>
 <body>
-    
-    <form name="ipcForm" onSubmit="sendForm(event)">
-        Remote Server:<br>
-        <input type="text" name="ip" id="ip" value="10.0.0.3">
-        <br>
-        Username:<br>
-        <input type="text" name="username" id="username" value="">
-        <br>
-        Password:<br>
-        <input type="password" name="password" id="password" value="">
-        <br><br>
-        <input type="submit" value="Submit">
-    </form>
+    <main>
+        <form name="ipcForm" onSubmit="sendForm(event)">
+            <div>
+            <p>
 
+                <label for="ip">Remote Server:</label>
+                <input type="text" name="ip" id="ip" value="10.0.0.3">
+            </p>
+            
+            <p>  
+              <label for="ip">Username:</label>
+              <input type="text" name="username" id="username" value="">
+            </p>
+            
+            <p> 
+                <label for="ip">Password:</label>
+                <input type="password" name="password" id="password" value="">
+            </p>
+          
+            <p class="submit"">
+                <input class="submit" type="submit" value="Submit">
+            </p>
+        </div>
+    </form>
+    </main>
     <script>
         function sendForm(event) {
             event.preventDefault();

@@ -36,9 +36,14 @@ const createWindow = () => {
 
 async function createAuthPrompt(parent: BrowserWindow) {
   const authPromptWin = new BrowserWindow({
-    width: 280,
-    height: 220,
+    width: 400,
+    height: 280,
     modal: true,
+    backgroundColor: "#00000000",
+    transparent: true,
+    roundedCorners: false,
+    frame: false,
+
     parent,
     webPreferences: {
       // nodeIntegration: false,
