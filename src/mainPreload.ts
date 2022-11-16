@@ -28,7 +28,7 @@ setTimeout(() => {
   }
   #toolbar {
     background-color: #333333 !important;
-    font-size: 34px !important;
+    font-size: 30px !important;
     color: #eeeeee !important;
     background-image: none !important;
   }
@@ -42,7 +42,7 @@ setTimeout(() => {
     background-image: none !important;
   }
   [class^="bi-"]::before, [class*=" bi-"]::before {
-    vertical-align: text-top !important;
+    vertical-align: text-center !important;
     
   }`
   body!.appendChild(style);
@@ -60,6 +60,7 @@ setTimeout(() => {
   swapIconWithBootstrap("toolbar-pause", "bi bi-pause-circle");
   swapIconWithBootstrap("toolbar-start-all", "bi bi-play-circle-fill");
   swapIconWithBootstrap("toolbar-pause-all", "bi bi-pause-circle-fill");
+  swapIconWithBootstrap("toolbar-inspector", "bi bi-info-circle");
 },100)
 
 
