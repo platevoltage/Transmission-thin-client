@@ -52,6 +52,12 @@ async function createAuthPrompt(parent: BrowserWindow) {
     }
   });
   authPromptWin.loadFile( path.join(__dirname, "./public/auth-form.html") ); // load your html form
+  authPromptWin.once("blur", () => {
+    authPromptWin.close();
+  })
+  authPromptWin.once("close", () => {
+    authPromptWin.destroy();
+  })
 
   return new Promise<any>(resolve => {
 
