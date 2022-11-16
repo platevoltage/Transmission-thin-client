@@ -37,10 +37,10 @@
     "linux": {
       "category": "AudioVideo",
       "publish": ["github"],
-      "icon": "./youtube.png"
+      "icon": "./transmission.png"
     },
     "mac": {
-      "icon": "./youtube.icns"
+      "icon": "./transmission.icns"
     }
 
   }
