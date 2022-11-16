@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && cp -R src/public dist/ && electron .",
+    "start": "tsc && rm -Rf dist/public && cp -R src/public dist/ && electron .",
     "make": "tsc && electron-builder -mwl --linux deb rpm"
   },
   "repository": {

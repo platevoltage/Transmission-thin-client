@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
-const css = ipcRenderer.on("getCSS", (event, styleSheet) => {
-
+ipcRenderer.on("getCSS", (event, styleSheet) => {
+  console.log(styleSheet)
   setTimeout(() => {
     const head = document.querySelector('head');
     const link = document.createElement('link');
@@ -29,6 +29,11 @@ const css = ipcRenderer.on("getCSS", (event, styleSheet) => {
     swapIconWithBootstrap("toolbar-start-all", "bi bi-play-circle-fill");
     swapIconWithBootstrap("toolbar-pause-all", "bi bi-pause-circle-fill");
     swapIconWithBootstrap("toolbar-inspector", "bi bi-info-circle");
+
+    swapIconWithBootstrap("settings_menu", "bi bi-gear-wide-connected");
+    swapIconWithBootstrap("prefs-button", "bi bi-wrench");
+    swapIconWithBootstrap("turtle-button", "bi bi-cone-striped");
+    swapIconWithBootstrap("compact-button", "bi bi-chevron-bar-contract");
   },100)
 
 });

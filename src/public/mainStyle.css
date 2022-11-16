@@ -1,50 +1,95 @@
 * {
-    border-color: #777777 !important;
+    /* border-color: #777777 !important; */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+    border: none !important;
+    background-image: none !important;
+    
+  }
+  body {
+    background-color: #000000;
+  }
 
-  }
   input, select {
-    background-color: #333333 !important;
-    border: 1px solid #777777 !important;
+    background-color: #000000 !important;
+    /* border: 1px solid #777777 !important; */
     color: #ffffff !important;
+    border: none;
   }
+  .error {
+    color: #c23f3f !important;
+  }
+
   .torrent {
-    background-color: #333333 !important;
-    border-color: #777777 !important;
+    background-color: #151515 !important;
+    margin: 10px
+    /* border: 2px solid #0d1022 !important; */
   }
+
+  #torrent_container {
+    margin-top: 10px !important;
+  }
+
   .torrent.selected{
     background-color: #555555 !important;
   }
+
   .torrent_name {
     color: #ffffff !important;
   }
+
   .torrent_progress_bar {
     background-image: none !important;
   }
-  .torrent_progress_bar.seeding {
+
+  .torrent_progress_bar.incomplete {
+    background-color: #000000;
+  }
+  
+  .torrent_progress_bar.complete.seeding {
     background-color: #009955;
   }
-  .torrent_progress_bar.paused {
+  .torrent_progress_bar.complete.leeching {
+    background-color: #0746b2;
+  }
+  .torrent_progress_bar.complete.paused {
     background-color: #555555;
   }
+
   .torrent_name {
     font-weight: normal !important;
   }
 
   #toolbar {
-    background-color: #333333 !important;
+    background-color: #151515 !important;
     font-size: 30px !important;
     color: #eeeeee !important;
     background-image: none !important;
   }
+
   #toolbar div {
     margin: 0 !important;
     background-image: none !important;
   }
+  #statusbar {
+    padding-top: 10px;
+  }
+
   #statusbar, .torrent_footer {
-    background-color: #333333 !important;
+    background-color: #151515 !important;
     color: #eeeeee !important;
     background-image: none !important;
+    z-index: 10;
+  }
+
+  .torrent_footer {
+    padding-bottom: 10px;
+   
+  }
+  .torrent_footer div {
+    background-color: #151515 !important;
+    font-size: 18px;
+    width: 50px !important;
+    /* padding: 0 !important; */
   }
   [class^="bi-"]::before, [class*=" bi-"]::before {
     vertical-align: text-center !important;
