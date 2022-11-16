@@ -40,7 +40,11 @@
       "icon": "./transmission.png"
     },
     "mac": {
-      "icon": "./transmission.icns"
+      "category": "Utilities",
+      "icon": "./transmission.icns",
+      "fileAssociations": {
+        "ext": ["torrent"]
+      }
     }
 
   }

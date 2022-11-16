@@ -70,10 +70,16 @@ app.whenReady().then(async () => {
   fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
     if (err) {
       const formData = await createAuthPrompt(win);
-      win.loadURL(`http://${formData.ip}:9091/transmission/web/`);
+      const didLoad = await win.loadURL(`http://${formData.ip}:9091/transmission/web/`);
+      console.log(didLoad);
     } else {
       preferences = JSON.parse(data);
-      win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
+      const didLoad = await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
+      try {
+        console.log(didLoad);
+      } catch(err) {
+        console.log(err)
+      }
     }
   });
 
