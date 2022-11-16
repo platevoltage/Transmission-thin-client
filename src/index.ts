@@ -73,16 +73,17 @@ app.whenReady().then(async () => {
 
 });
 
-
+ 
 app.on('window-all-closed', () => {
   app.quit();
 });
 
 
 
-async function readFile(path: string) {
+async function readFile(path: string, encoding?: BufferEncoding | null) {
+
   try {
-    const data = await fs.promises.readFile(path)
+    const data = await fs.promises.readFile(path, { encoding })
     return data;
   }
   catch (err) {
