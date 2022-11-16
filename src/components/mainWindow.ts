@@ -20,4 +20,4 @@ export const createMainWindow = () => {
       e.preventDefault()
     });
     return win 
-  };
+};
