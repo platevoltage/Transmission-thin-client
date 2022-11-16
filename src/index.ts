@@ -82,6 +82,14 @@ app.whenReady().then(async () => {
       }
     }
   });
+  fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      // console.log("data", data);
+      win.webContents.send("getCSS", data);
+    }
+  })
 
 
   app.on("login", async (event, webContents, request, authInfo, callback) => {
@@ -127,4 +135,5 @@ app.whenReady().then(async () => {
 app.on('window-all-closed', () => {
   app.quit();
 });
+
 

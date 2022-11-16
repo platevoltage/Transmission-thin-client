@@ -1,0 +1,52 @@
+* {
+    border-color: #777777 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+
+  }
+  input, select {
+    background-color: #333333 !important;
+    border: 1px solid #777777 !important;
+    color: #ffffff !important;
+  }
+  .torrent {
+    background-color: #333333 !important;
+    border-color: #777777 !important;
+  }
+  .torrent.selected{
+    background-color: #555555 !important;
+  }
+  .torrent_name {
+    color: #ffffff !important;
+  }
+  .torrent_progress_bar {
+    background-image: none !important;
+  }
+  .torrent_progress_bar.seeding {
+    background-color: #009955;
+  }
+  .torrent_progress_bar.paused {
+    background-color: #555555;
+  }
+  .torrent_name {
+    font-weight: normal !important;
+  }
+
+  #toolbar {
+    background-color: #333333 !important;
+    font-size: 30px !important;
+    color: #eeeeee !important;
+    background-image: none !important;
+  }
+  #toolbar div {
+    margin: 0 !important;
+    background-image: none !important;
+  }
+  #statusbar, .torrent_footer {
+    background-color: #333333 !important;
+    color: #eeeeee !important;
+    background-image: none !important;
+  }
+  [class^="bi-"]::before, [class*=" bi-"]::before {
+    vertical-align: text-center !important;
+    
+  }
