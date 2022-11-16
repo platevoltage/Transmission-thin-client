@@ -1,38 +1,9 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
+import { createMainWindow } from './components/mainWindow';
 
 let triedAutoLogin = false;
-
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 1280,
-    height: 720,
-    title: "Transmission",
-    frame: false,
-    titleBarStyle: "hidden",
-
-    webPreferences: {
-      // nodeIntegration: false,
-      // contextIsolation: true,
-      preload: path.join(__dirname, 'mainPreload.js')
-    }
-  });
-
-  
-
-
-
-  win.on('page-title-updated', function(e) {
-    e.preventDefault()
-  });
-
-
-
-  return win
-      
-};
-
 
 async function createAuthPrompt(parent: BrowserWindow) {
   const authPromptWin = new BrowserWindow({
@@ -79,7 +50,7 @@ let preferences: {
   password: string
 }
 app.whenReady().then(async () => {
-  const win = createWindow();
+  const win = createMainWindow();
   fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
     if (err) {
       const formData = await createAuthPrompt(win);
