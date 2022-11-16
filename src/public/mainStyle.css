@@ -3,6 +3,7 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
     border: none !important;
     background-image: none !important;
+    font-smooth: always !important;
     
   }
   body {
@@ -39,7 +40,7 @@
   }
 
   .torrent.selected{
-    background-color: #555555 !important;
+    background-color: #303030 !important;
   }
 
   .torrent_name {
