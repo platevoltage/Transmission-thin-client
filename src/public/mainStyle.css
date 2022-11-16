@@ -95,3 +95,14 @@
     vertical-align: text-center !important;
     
   }
+
+  #torrent_inspector {
+    background-color: #151515 !important;
+    color: #fff !important;
+  }
+  .inspector-tab {
+    background-color: #303030 !important;
+  }
+  .inspector-tab.selected {
+    background-color: #404040 !important;
+  }

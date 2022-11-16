@@ -34,6 +34,11 @@ ipcRenderer.on("getCSS", (event, styleSheet) => {
     swapIconWithBootstrap("prefs-button", "bi bi-wrench");
     swapIconWithBootstrap("turtle-button", "bi bi-cone-striped");
     swapIconWithBootstrap("compact-button", "bi bi-chevron-bar-contract");
+
+    swapIconWithBootstrap("inspector-tab-info", "bi bi-gear-wide-connected");
+    swapIconWithBootstrap("inspector-tab-peers", "bi bi-wrench");
+    swapIconWithBootstrap("inspector-tab-trackers", "bi bi-cone-striped");
+    swapIconWithBootstrap("inspector-tab-files", "bi bi-chevron-bar-contract");
   },100)
 
 });
