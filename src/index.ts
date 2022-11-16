@@ -9,6 +9,8 @@ const createWindow = () => {
     width: 1280,
     height: 720,
     title: "Transmission",
+    frame: false,
+    titleBarStyle: "hidden",
 
     webPreferences: {
       // nodeIntegration: false,

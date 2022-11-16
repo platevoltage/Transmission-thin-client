@@ -60,15 +60,23 @@
   }
 
   #toolbar {
+    padding-top: 20px !important;
     background-color: #151515 !important;
     font-size: 30px !important;
     color: #eeeeee !important;
     background-image: none !important;
+    -webkit-app-region: drag;
   }
 
   #toolbar div {
     margin: 0 !important;
     background-image: none !important;
+  }
+  #toolbar-open {
+    padding-left: 20px !important;
+  }
+  #toolbar-inspector {
+    padding-right: 20px !important;
   }
   #statusbar {
     padding-top: 10px;
