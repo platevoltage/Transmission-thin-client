@@ -10,10 +10,11 @@
   }
 
   input, select {
-    background-color: #000000 !important;
+    background-color: #303030 !important;
     /* border: 1px solid #777777 !important; */
     color: #ffffff !important;
     border: none;
+    border-radius: 0px !important;
   }
   .error {
     color: #c23f3f !important;
@@ -105,6 +106,7 @@
   }
 
   #torrent_inspector {
+    padding-top: 50px !important;
     background-color: #151515 !important;
     color: #fff !important;
   }
