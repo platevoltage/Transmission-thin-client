@@ -13,7 +13,8 @@ setTimeout(() => {
   const style = document.createElement('style');
   style.textContent = `
   * {
-    background-image: none !important;
+    border-color: #777777 !important;
+
   }
   .torrent {
     background-color: #333333 !important;
@@ -29,9 +30,16 @@ setTimeout(() => {
     background-color: #333333 !important;
     font-size: 34px !important;
     color: #eeeeee !important;
+    background-image: none !important;
   }
   #toolbar div {
     margin: 0 !important;
+    background-image: none !important;
+  }
+  #statusbar, .torrent_footer {
+    background-color: #333333 !important;
+    color: #eeeeee !important;
+    background-image: none !important;
   }
   [class^="bi-"]::before, [class*=" bi-"]::before {
     vertical-align: text-top !important;
