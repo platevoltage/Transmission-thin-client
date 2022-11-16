@@ -105,7 +105,7 @@
   .torrent_footer {
     padding: 10px 0 10px 10px;
     /* margin: 0 !important; */
-   
+
   }
   .torrent_footer div {
     background-color: #303030 !important;
@@ -113,10 +113,19 @@
     width: 40px !important;
     height: 20px !important;
     margin: 0 5px 0 5px !important;
+    border-radius: 5px;
   }
   .torrent_footer div.selected {
     background-color: #404040 !important;
   }
+  #login {
+    position: absolute;
+    right: 16px;
+  }
+  #login:hover {
+    background-color: #000000;
+  }
+
   [class^="bi-"]::before, [class*=" bi-"]::before {
     vertical-align: text-center !important;
     

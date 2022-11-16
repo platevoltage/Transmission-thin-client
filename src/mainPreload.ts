@@ -38,11 +38,13 @@ ipcRenderer.on("getCSS", (_event, styleSheet) => {
     swapIconWithBootstrap("inspector-tab-peers", "bi bi-wrench");
     swapIconWithBootstrap("inspector-tab-trackers", "bi bi-cone-striped");
     swapIconWithBootstrap("inspector-tab-files", "bi bi-chevron-bar-contract");
+
+    createLoginButton();
   
 
 });
 contextBridge.exposeInMainWorld("api", {
-    sendFormData: (formData) => ipcRenderer.send('log-in-attempt', formData),
+    login: () => ipcRenderer.send('log-in-button-clicked'),
 });
 
 
@@ -74,6 +76,18 @@ function uploadTorrent(fileList: FileList) {
   fileUploadElement.files = fileList;
   const uploadButton = document.getElementById('upload_confirm_button');
   uploadButton!.click();
+}
+
+function createLoginButton() {
+  const footer = document.getElementsByClassName('torrent_footer')[0];
+  const button = document.createElement('div');
+  button.setAttribute('id', 'login');
+  // button.setAttribute('onClick', '() => console.log("dsfsd)')
+  button.innerHTML = `<i class="bi bi-box-arrow-in-right"></i>`
+  button.addEventListener('click', () => {
+    ipcRenderer.send("log-in-button-clicked");
+  })
+  footer.appendChild(button);
 }
 
 

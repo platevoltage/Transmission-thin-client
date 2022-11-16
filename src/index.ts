@@ -50,14 +50,14 @@ async function createAuthPrompt(parent: BrowserWindow) {
 
   return new Promise<any>(resolve => {
 
-    ipcMain.once("log-in-attempt", (event, formData: {username: string, password: string}) => {
-      
-      resolve(formData);
-      
-      fs.writeFileSync(`${app.getPath("userData")}/preferences.json`, JSON.stringify(formData))
-      authPromptWin.destroy();
+      ipcMain.once("log-in-attempt", (event, formData: {username: string, password: string}) => {
+        
+        resolve(formData);
+        
+        fs.writeFileSync(`${app.getPath("userData")}/preferences.json`, JSON.stringify(formData))
+        authPromptWin.destroy();
+      })
     })
-  })
     
   }
 
@@ -129,6 +129,11 @@ app.whenReady().then(async () => {
         win.webContents.send("addFile", file)
       }
     })
+  })
+
+  ipcMain.on("log-in-button-clicked", () => {
+    const formData = createAuthPrompt(win);
+    console.log("login")
   })
 
   // note: your contextMenu, Tooltip and Title code will go here!
