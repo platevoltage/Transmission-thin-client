@@ -132,12 +132,14 @@
   }
 
   #torrent_inspector {
-    padding-top: 50px !important;
+    padding: 50px 50px 50px 50px !important;
+    bottom: 40px !important;
     background-color: #151515 !important;
     color: #fff !important;
   }
   .inspector-tab {
     background-color: #303030 !important;
+    font-size: 14px;
   }
   .inspector-tab.selected {
     background-color: #404040 !important;

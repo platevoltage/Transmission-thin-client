@@ -84,12 +84,11 @@ app.whenReady().then(async () => {
     if (err) {
       const formData = await createAuthPrompt(win);
       const didLoad = await win.loadURL(`http://${formData.ip}:9091/transmission/web/`);
-      console.log(didLoad);
+      
     } else {
       preferences = JSON.parse(data);
-      const didLoad = await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
       try {
-        console.log(didLoad);
+        const didLoad = await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
       } catch(err) {
         console.log(err)
       }
