@@ -28,12 +28,12 @@ app.whenReady().then(async () => {
       }
     }
   });
+
   win.on("ready-to-show", () => {
     fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
       if (err) {
         console.error(err);
       } else {
-        // console.log("data", data);
         win.webContents.send("getCSS", data);
       }
     });
@@ -45,11 +45,9 @@ app.whenReady().then(async () => {
       event.preventDefault();
 
       fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
-        // console.log(app.getPath("userData"), data)
         if (err || triedAutoLogin) {
           console.error(err)
           const formData = await createAuthModal(win);
-   
           callback(formData.username, formData.password);
         } else {
           
@@ -60,16 +58,10 @@ app.whenReady().then(async () => {
       });
   });
 
-  app.on("open-file", (event: any, path) => {
-    event.preventDefault()
-
-    fs.readFile(path, (err, file) => {
-      if (err) {
-        console.error(err)
-      } else {
-        win.webContents.send("addFile", file)
-      }
-    });
+  app.on("open-file", async (event: any, path: string) => {
+    event.preventDefault();
+    const file = await readFile(path);
+    win.webContents.send("addFile", file)
   });
 
   ipcMain.on("log-in-button-clicked", () => {
@@ -87,3 +79,14 @@ app.on('window-all-closed', () => {
 });
 
 
+
+async function readFile(path: string) {
+  try {
+    const data = await fs.promises.readFile(path)
+    return data;
+  }
+  catch (err) {
+    console.error(err)
+    return err;
+  }
+}
