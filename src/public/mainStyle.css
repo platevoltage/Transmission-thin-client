@@ -120,6 +120,24 @@
   .torrent_footer div.selected {
     background-color: #404040 !important;
   }
+
+  .ui-widget, .ui-widget-header {
+    background-color: #303030 !important;
+  }
+  .ui-state-default {
+    background-color: #404040 !important;
+    /* color: #ffffff !important; */
+  }
+  .ui-tabs-active {
+    background-color: #303030 !important;
+    /* color: #ffffff !important; */
+  }
+  .ui-tabs-anchor {
+    color: #ffffff !important;
+  }
+  .ui-widget-content {
+    color: #ffffff !important;
+  }
   #login {
     position: absolute;
     right: 16px;
