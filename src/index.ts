@@ -7,26 +7,16 @@ import { createAuthModal } from './components/authModal';
 let triedAutoLogin = false;
 
 let preferences = {
-  ip: undefined,
+  url: undefined,
   username: undefined,
   password: undefined
 }
 
 app.whenReady().then(() => {
   boot();
-
-  // note: your contextMenu, Tooltip and Title code will go here!
 });
-
- 
-app.on('window-all-closed', () => {
-  // app.quit();
-});
-
-
 
 async function readFile(path: string, encoding?: BufferEncoding | null) {
-
   try {
     const data = await fs.promises.readFile(path, { encoding })
     return data;
@@ -50,17 +40,6 @@ function createLoginEventListener(parentWindow: BrowserWindow) {
           const formData = await createAuthModal(parentWindow);
           callback(formData.username, formData.password);
         }
-        // loadCSS(parentWindow);
-  });
-}
-
-function loadCSS(win: BrowserWindow) {
-  fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
-    if (err) {
-      console.error(err);
-    } else {
-      win.webContents.send("getCSS", data);
-    }
   });
 }
 
@@ -73,7 +52,7 @@ async function loginOnBoot(win: BrowserWindow) {
     const timeout = setTimeout(() => {
       win.loadFile( path.join(__dirname, "./public/error.html") )
     }, 5000)
-    await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
+    await win.loadURL(`${preferences.url}/transmission/web/`);
     clearTimeout(timeout);
 
   } catch(err) {
@@ -109,5 +88,8 @@ async function boot() {
     } catch (err) {
       console.error(err)
     }
+  });
+  app.on('window-all-closed', () => {
+    // app.quit();
   });
 }

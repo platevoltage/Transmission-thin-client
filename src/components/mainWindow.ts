@@ -22,9 +22,9 @@ export const createMainWindow = () => {
     });
 
     win.on("ready-to-show", () => {
-        setTimeout(() => {
-            loadCSS(win);
-        },0)
+        
+        loadCSS(win);
+        
             
     });
     win.on("close", () => {
@@ -32,6 +32,7 @@ export const createMainWindow = () => {
         app.removeAllListeners("login");
         app.removeAllListeners("open-file");
         app.removeAllListeners("log-in-button-clicked");
+        app.removeAllListeners("window-all-closed");
         ipcMain.removeAllListeners("log-in-button-clicked");
     });
     return win 

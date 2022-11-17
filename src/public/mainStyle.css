@@ -14,6 +14,7 @@
     border: none !important;
     background-image: none !important;
     font-smooth: always !important;
+    user-select: none !important;
 
     
 }

@@ -15,7 +15,7 @@
             <p>
 
                 <label for="ip">Remote Server:</label>
-                <input type="text" name="ip" id="ip" value="10.0.0.3">
+                <input type="text" name="ip" id="ip" value="http://10.0.0.3:9091">
             </p>
             
             <p>  
@@ -42,7 +42,7 @@
         function sendForm(event) {
             event.preventDefault();
     
-            window.api.sendFormData({ip: event.target[0].value, username: event.target[1].value, password: event.target[2].value});
+            window.api.sendFormData({url: event.target[0].value, username: event.target[1].value, password: event.target[2].value});
         }
 
 
