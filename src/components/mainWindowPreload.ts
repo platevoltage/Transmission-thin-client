@@ -14,13 +14,7 @@ ipcRenderer.on("getCSS", (_event, styleSheet) => {
     style.textContent = styleSheet;
     body!.appendChild(style);
     
-      
-    function swapIconWithBootstrap(elementName: string, className: string) {
-      const element = document.getElementById(elementName);
-      const icon = document.createElement('i');
-      icon.setAttribute("class", className)
-      if (!element?.lastElementChild?.classList.contains("bi")) element?.appendChild(icon);
-    }
+
     swapIconWithBootstrap("toolbar-open", "bi bi-folder2-open");
     swapIconWithBootstrap("toolbar-remove", "bi bi-x-circle");
     swapIconWithBootstrap("toolbar-start", "bi bi-play-circle");
@@ -90,4 +84,11 @@ function createLoginButton() {
   footer.appendChild(button);
 }
 
-
+function swapIconWithBootstrap(elementName: string, className: string) {
+  const element = document.getElementById(elementName);
+  const icon = document.createElement('i');
+  icon.setAttribute("class", className)
+  if (!element?.lastElementChild?.classList.contains("bi")) {
+    element?.appendChild(icon);
+  }
+}
