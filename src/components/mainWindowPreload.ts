@@ -33,6 +33,9 @@ ipcRenderer.on("getCSS", (_event, styleSheet) => {
     swapIconWithBootstrap("inspector-tab-trackers", "bi bi-broadcast-pin");
     swapIconWithBootstrap("inspector-tab-files", "bi bi-files");
 
+    swapIconWithBootstrap("speed-up-icon", "bi bi-caret-up");
+    swapIconWithBootstrap("speed-dn-icon", "bi bi-caret-down");
+
     createLoginButton();
   
 
