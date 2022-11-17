@@ -7,9 +7,9 @@ import { createAuthModal } from './components/authModal';
 let triedAutoLogin = false;
 
 let preferences = {
-  ip: "",
-  username: "",
-  password: ""
+  ip: undefined,
+  username: undefined,
+  password: undefined
 }
 
 app.whenReady().then(() => {
@@ -69,25 +69,26 @@ async function boot() {
   
   const win = createMainWindow();
   createLoginEventListener(win);
+
   try {
     const file = await readFile(`${app.getPath("userData")}/preferences.json`, 'utf8');
-    // const ses = win.webContents.session;
-
     if (typeof file === "string") {
       preferences = JSON.parse(file);
     }
+    const timeout = setTimeout(() => {
+      win.loadFile( path.join(__dirname, "./public/error.html") )
+    }, 5000)
     await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
+    clearTimeout(timeout);
+
   } catch(err) {
 
     console.error(err);
     const formData = await createAuthModal(win);
-    console.log(triedAutoLogin)
     preferences = formData;
 
     win.close();
-    boot();
-
-    
+    boot();  
   }
 
   app.on("open-file", async (event: any, path: string) => {
@@ -95,12 +96,18 @@ async function boot() {
     const file = await readFile(path);
     win.webContents.send("addFile", file)
   });
-  ipcMain.on("log-in-button-clicked", () => {
-    // const formData = createAuthModal(win);
-    // ses.closeAllConnections();
-    win.close();
-    boot();
 
-    // app.relaunch();
+  ipcMain.on("log-in-button-clicked", async () => {
+
+    try {
+      const formData = await createAuthModal(win);
+      preferences = formData;
+      triedAutoLogin = false;
+      win.close();
+      boot();
+    } catch (err) {
+      console.error(err)
+    }
+
   });
 }
