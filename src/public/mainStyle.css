@@ -138,6 +138,18 @@
   .ui-widget-content {
     color: #ffffff !important;
   }
+  .inspector_torrent_file_list_entry_name {
+    color: #ffffff !important;
+  }
+  .inspector_tracker_entry.even {
+    background-color: #303030 !important;
+  }
+  .inspector_tracker_entry.odd {
+    background-color: #262626 !important;
+  }
+  .inspector_tracker_entry > div {
+    color: #ffffff !important;
+  }
   #login {
     position: absolute;
     right: 16px;
