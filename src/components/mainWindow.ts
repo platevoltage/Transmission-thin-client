@@ -19,5 +19,8 @@ export const createMainWindow = () => {
     win.on('page-title-updated', function(e) {
       e.preventDefault()
     });
+    // app.on("login", async (event, webContents, request, authInfo, callback) => {
+    //     console.log("ogin")
+    // })
     return win 
 };

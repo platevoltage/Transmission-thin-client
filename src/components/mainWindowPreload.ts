@@ -19,7 +19,7 @@ ipcRenderer.on("getCSS", (_event, styleSheet) => {
       const element = document.getElementById(elementName);
       const icon = document.createElement('i');
       icon.setAttribute("class", className)
-      element?.appendChild(icon);
+      if (!element?.lastElementChild?.classList.contains("bi")) element?.appendChild(icon);
     }
     swapIconWithBootstrap("toolbar-open", "bi bi-folder2-open");
     swapIconWithBootstrap("toolbar-remove", "bi bi-x-circle");

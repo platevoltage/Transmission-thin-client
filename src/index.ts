@@ -8,54 +8,33 @@ let triedAutoLogin = false;
 
 let preferences: {
   ip: string,
-  username: string,
-  password: string
+  username: "",
+  password: ""
 }
 
 app.whenReady().then(async () => {
   const win = createMainWindow();
-  fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
-    if (err) {
-      const formData = await createAuthModal(win);
-      const didLoad = await win.loadURL(`http://${formData.ip}:9091/transmission/web/`);
-      
-    } else {
-      preferences = JSON.parse(data);
+  createLoginEventListener(win);
+
+  const file = await readFile(`${app.getPath("userData")}/preferences.json`, 'utf8');
+
+  console.log(file);
+  
+  if (typeof file === 'string') {
+      preferences = JSON.parse(file);
       try {
         const didLoad = await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
       } catch(err) {
         console.log(err)
       }
-    }
-  });
+  } else {
+    const formData = await createAuthModal(win);
+    const didLoad = await win.loadURL(`http://${formData.ip}:9091/transmission/web/`);
+  }
+
 
   win.on("ready-to-show", () => {
-    fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        win.webContents.send("getCSS", data);
-      }
-    });
-  });
-
-
-  app.on("login", async (event, webContents, request, authInfo, callback) => {
-      
-      event.preventDefault();
-
-      fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
-        if (err || triedAutoLogin) {
-          console.error(err)
-          const formData = await createAuthModal(win);
-          callback(formData.username, formData.password);
-        } else {
-          
-          preferences = JSON.parse(data);
-          callback(preferences.username, preferences.password);
-          triedAutoLogin = true
-        }
-      });
+    loadCSS(win);
   });
 
   app.on("open-file", async (event: any, path: string) => {
@@ -88,6 +67,31 @@ async function readFile(path: string, encoding?: BufferEncoding | null) {
   }
   catch (err) {
     console.error(err)
-    return err;
+    return null;
   }
+}
+
+function createLoginEventListener(parentWindow: BrowserWindow) {
+  app.on("login", async (event, webContents, request, authInfo, callback) => {
+      console.log("login attempt");
+      event.preventDefault();
+        if(!triedAutoLogin) {
+          callback(preferences.username || "", preferences.password || "");
+          triedAutoLogin = true;
+        } else {
+          const formData = await createAuthModal(parentWindow);
+          callback(formData.username, formData.password);
+        }
+        loadCSS(parentWindow);
+  });
+}
+
+function loadCSS(win: BrowserWindow) {
+  fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      win.webContents.send("getCSS", data);
+    }
+  });
 }

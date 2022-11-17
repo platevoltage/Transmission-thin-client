@@ -11,6 +11,7 @@ export async function createAuthModal(parent: BrowserWindow) {
       transparent: true,
       roundedCorners: false,
       frame: false,
+      alwaysOnTop: true,
   
       parent,
       webPreferences: {
@@ -21,14 +22,13 @@ export async function createAuthModal(parent: BrowserWindow) {
     });
     authPromptWin.loadFile( path.join(__dirname, "../public/auth-form.html") ); // load your html form
     authPromptWin.once("blur", () => {
-      authPromptWin.close();
+    //   authPromptWin.close();
     })
     authPromptWin.once("close", () => {
       authPromptWin.destroy();
     })
   
     return new Promise<any>(resolve => {
-  
         ipcMain.once("log-in-attempt", (event, formData: {username: string, password: string}) => {
           
           resolve(formData);
