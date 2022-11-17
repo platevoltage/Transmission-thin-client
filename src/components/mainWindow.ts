@@ -20,9 +20,7 @@ export const createMainWindow = () => {
     win.on('page-title-updated', function(e) {
       e.preventDefault()
     });
-    // app.on("login", async (event, webContents, request, authInfo, callback) => {
-    //     console.log("ogin")
-    // })
+
     win.on("ready-to-show", () => {
         setTimeout(() => {
             loadCSS(win);
@@ -47,4 +45,4 @@ function loadCSS(win: BrowserWindow) {
         win.webContents.send("getCSS", data);
       }
     });
-  }
+}

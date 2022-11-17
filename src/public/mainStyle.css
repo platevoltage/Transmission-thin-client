@@ -1,178 +1,189 @@
+:root {
+  --background: #000000;
+  --foreground: #151515;
+  --dark-text: #303030;
+  --mid-text: #404040;
+  --main-text: #ffffff;
+  --accent: #2b2e3b;
+}
+
+
 * {
     /* border-color: #777777 !important; */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
     border: none !important;
     background-image: none !important;
     font-smooth: always !important;
+
     
-  }
-  body {
-    background-color: #000000;
-  }
+}
+body {
+  background-color: var(--background);
+}
 
-  input, select {
-    background-color: #303030 !important;
-    /* border: 1px solid #777777 !important; */
-    color: #ffffff !important;
-    border: none;
-    border-radius: 5px !important;
-    margin: 0 3px 0 3px !important;
-    height: 26px !important;
-    padding: 2px !important;
-  }
-  input:focus, select:focus {
-    outline: none !important
-  }
+input, select {
+  background-color: var(--dark-text) !important;
+  /* border: 1px solid #777777 !important; */
+  color: var(--main-text) !important;
+  border: none;
+  border-radius: 5px !important;
+  margin: 0 3px 0 3px !important;
+  height: 26px !important;
+  padding: 2px !important;
+}
+input:focus, select:focus {
+  outline: none !important
+}
 
 
-  .error {
-    color: #c23f3f !important;
-  }
+.error {
+  color: #c23f3f !important;
+}
 
-  .torrent {
-    background-color: #151515 !important;
-    margin: 10px
-    /* border: 2px solid #0d1022 !important; */
-  }
+.torrent {
+  background-color: var(--accent) !important;
+  margin: 10px
+  /* border: 2px solid #0d1022 !important; */
+}
 
-  #torrent_container {
-    margin-top: 40px !important;
-    margin-bottom: 20px !important;
-  }
+#torrent_container {
+  margin-top: 40px !important;
+  margin-bottom: 20px !important;
+}
 
-  .torrent.selected{
-    background-color: #303030 !important;
-  }
+.torrent.selected{
+  background-color: var(--dark-text) !important;
+}
 
-  .torrent_name {
-    color: #ffffff !important;
-  }
+.torrent_name {
+  color: var(--main-text) !important;
+}
 
-  .torrent_progress_bar {
-    background-image: none !important;
-  }
+.torrent_progress_bar {
+  background-image: none !important;
+}
 
-  .torrent_progress_bar.incomplete {
-    background-color: #000000;
-  }
+.torrent_progress_bar.incomplete {
+  background-color: var(--background);
+}
+
+.torrent_progress_bar.complete.seeding {
+  background-color: #009955;
+}
+.torrent_progress_bar.complete.leeching {
+  background-color: #0746b2;
+}
+.torrent_progress_bar.complete.paused {
+  background-color: #555555;
+}
+
+.torrent_name {
+  font-weight: normal !important;
+}
+
+#toolbar {
+  padding-top: 26px !important;
+  background-color: var(--foreground) !important;
+  font-size: 30px !important;
+  color: #eeeeee !important;
+  background-image: none !important;
+  -webkit-app-region: drag;
+}
+
+#toolbar div {
+  margin: 0 !important;
+  background-image: none !important;
+}
+#toolbar-open {
+  padding-left: 20px !important;
+}
+#toolbar-inspector {
+  padding-right: 20px !important;
+}
+#statusbar {
+  padding: 10px 0 10px 0;
+}
+#filter {
+  margin-left: 18px !important;
+  margin-right: 18px !important;
+}
+
+#statusbar, .torrent_footer {
+  background-color: var(--foreground) !important;
+  color: #eeeeee !important;
+  background-image: none !important;
+  z-index: 10;
+}
+
+.torrent_footer {
+  padding: 10px 0 10px 10px;
+  /* margin: 0 !important; */
+
+}
+.torrent_footer div {
+  background-color: var(--dark-text) !important;
+  font-size: 16px;
+  width: 40px !important;
+  height: 20px !important;
+  margin: 0 5px 0 5px !important;
+  border-radius: 5px;
+}
+.torrent_footer div.selected {
+  background-color: var(--mid-text) !important;
+}
+
+.ui-widget, .ui-widget-header {
+  background-color: var(--dark-text) !important;
+}
+.ui-state-default {
+  background-color: var(--mid-text) !important;
+  /* color: var(--main-text) !important; */
+}
+.ui-tabs-active {
+  background-color: var(--dark-text) !important;
+  /* color: var(--main-text) !important; */
+}
+.ui-tabs-anchor {
+  color: var(--main-text) !important;
+}
+.ui-widget-content {
+  color: var(--main-text) !important;
+}
+.inspector_torrent_file_list_entry_name {
+  color: var(--main-text) !important;
+}
+.inspector_tracker_entry.even {
+  background-color: var(--dark-text) !important;
+}
+.inspector_tracker_entry.odd {
+  background-color: #262626 !important;
+}
+.inspector_tracker_entry > div {
+  color: var(--main-text) !important;
+}
+#login {
+  position: absolute;
+  right: 16px;
+}
+#login:hover {
+  background-color: var(--background);
+}
+
+[class^="bi-"]::before, [class*=" bi-"]::before {
+  vertical-align: text-center !important;
   
-  .torrent_progress_bar.complete.seeding {
-    background-color: #009955;
-  }
-  .torrent_progress_bar.complete.leeching {
-    background-color: #0746b2;
-  }
-  .torrent_progress_bar.complete.paused {
-    background-color: #555555;
-  }
+}
 
-  .torrent_name {
-    font-weight: normal !important;
-  }
-
-  #toolbar {
-    padding-top: 26px !important;
-    background-color: #151515 !important;
-    font-size: 30px !important;
-    color: #eeeeee !important;
-    background-image: none !important;
-    -webkit-app-region: drag;
-  }
-
-  #toolbar div {
-    margin: 0 !important;
-    background-image: none !important;
-  }
-  #toolbar-open {
-    padding-left: 20px !important;
-  }
-  #toolbar-inspector {
-    padding-right: 20px !important;
-  }
-  #statusbar {
-    padding: 10px 0 10px 0;
-  }
-  #filter {
-    margin-left: 18px !important;
-    margin-right: 18px !important;
-  }
-
-  #statusbar, .torrent_footer {
-    background-color: #151515 !important;
-    color: #eeeeee !important;
-    background-image: none !important;
-    z-index: 10;
-  }
-
-  .torrent_footer {
-    padding: 10px 0 10px 10px;
-    /* margin: 0 !important; */
-
-  }
-  .torrent_footer div {
-    background-color: #303030 !important;
-    font-size: 16px;
-    width: 40px !important;
-    height: 20px !important;
-    margin: 0 5px 0 5px !important;
-    border-radius: 5px;
-  }
-  .torrent_footer div.selected {
-    background-color: #404040 !important;
-  }
-
-  .ui-widget, .ui-widget-header {
-    background-color: #303030 !important;
-  }
-  .ui-state-default {
-    background-color: #404040 !important;
-    /* color: #ffffff !important; */
-  }
-  .ui-tabs-active {
-    background-color: #303030 !important;
-    /* color: #ffffff !important; */
-  }
-  .ui-tabs-anchor {
-    color: #ffffff !important;
-  }
-  .ui-widget-content {
-    color: #ffffff !important;
-  }
-  .inspector_torrent_file_list_entry_name {
-    color: #ffffff !important;
-  }
-  .inspector_tracker_entry.even {
-    background-color: #303030 !important;
-  }
-  .inspector_tracker_entry.odd {
-    background-color: #262626 !important;
-  }
-  .inspector_tracker_entry > div {
-    color: #ffffff !important;
-  }
-  #login {
-    position: absolute;
-    right: 16px;
-  }
-  #login:hover {
-    background-color: #000000;
-  }
-
-  [class^="bi-"]::before, [class*=" bi-"]::before {
-    vertical-align: text-center !important;
-    
-  }
-
-  #torrent_inspector {
-    padding: 50px 50px 50px 50px !important;
-    bottom: 40px !important;
-    background-color: #151515 !important;
-    color: #fff !important;
-  }
-  .inspector-tab {
-    background-color: #303030 !important;
-    font-size: 14px;
-  }
-  .inspector-tab.selected {
-    background-color: #404040 !important;
-  }
+#torrent_inspector {
+  padding: 50px 50px 50px 50px !important;
+  bottom: 40px !important;
+  background-color: var(--foreground) !important;
+  color: #fff !important;
+}
+.inspector-tab {
+  background-color: var(--dark-text) !important;
+  font-size: 14px;
+}
+.inspector-tab.selected {
+  background-color: var(--mid-text) !important;
+}
