@@ -1,158 +1,113 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
+import { createMainWindow } from './components/mainWindow';
+import { createAuthModal } from './components/authModal';
 
 let triedAutoLogin = false;
 
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 1280,
-    height: 720,
-    title: "Transmission",
-    frame: false,
-    titleBarStyle: "hidden",
-
-    webPreferences: {
-      // nodeIntegration: false,
-      // contextIsolation: true,
-      preload: path.join(__dirname, 'mainPreload.js')
-    }
-  });
-
-  
-
-
-
-  win.on('page-title-updated', function(e) {
-    e.preventDefault()
-  });
-
-
-
-  return win
-      
-};
-
-
-async function createAuthPrompt(parent: BrowserWindow) {
-  const authPromptWin = new BrowserWindow({
-    width: 400,
-    height: 280,
-    modal: true,
-    backgroundColor: "#00000000",
-    transparent: true,
-    roundedCorners: false,
-    frame: false,
-
-    parent,
-    webPreferences: {
-      // nodeIntegration: false,
-      // contextIsolation: true,
-      preload: path.join(__dirname, 'loginPreload.js')
-    }
-  });
-  authPromptWin.loadFile( path.join(__dirname, "./public/auth-form.html") ); // load your html form
-  authPromptWin.once("blur", () => {
-    authPromptWin.close();
-  })
-  authPromptWin.once("close", () => {
-    authPromptWin.destroy();
-  })
-
-  return new Promise<any>(resolve => {
-
-      ipcMain.once("log-in-attempt", (event, formData: {username: string, password: string}) => {
-        
-        resolve(formData);
-        
-        fs.writeFileSync(`${app.getPath("userData")}/preferences.json`, JSON.stringify(formData))
-        authPromptWin.destroy();
-      })
-    })
-    
-  }
-
-
-let preferences: {
-  ip: string,
-  username: string,
-  password: string
+let preferences = {
+  ip: undefined,
+  username: undefined,
+  password: undefined
 }
-app.whenReady().then(async () => {
-  const win = createWindow();
-  fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
-    if (err) {
-      const formData = await createAuthPrompt(win);
-      const didLoad = await win.loadURL(`http://${formData.ip}:9091/transmission/web/`);
-      
-    } else {
-      preferences = JSON.parse(data);
-      try {
-        const didLoad = await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
-      } catch(err) {
-        console.log(err)
-      }
-    }
-  });
-  win.on("ready-to-show", () => {
-    fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        // console.log("data", data);
-        win.webContents.send("getCSS", data);
-      }
-    })
-  })
 
-
-  app.on("login", async (event, webContents, request, authInfo, callback) => {
-      
-      event.preventDefault();
-
-      fs.readFile(`${app.getPath("userData")}/preferences.json`, 'utf8', async (err, data) => {
-        // console.log(app.getPath("userData"), data)
-        if (err || triedAutoLogin) {
-          console.error(err)
-          const formData = await createAuthPrompt(win);
-   
-          callback(formData.username, formData.password);
-        } else {
-          
-          preferences = JSON.parse(data);
-          callback(preferences.username, preferences.password);
-          triedAutoLogin = true
-        }
-      })
-
-      
-
-  });
-
-  app.on("open-file", (event: any, path) => {
-    event.preventDefault()
-
-    fs.readFile(path, (err, file) => {
-      if (err) {
-        console.error(err)
-      } else {
-        win.webContents.send("addFile", file)
-      }
-    })
-  })
-
-  ipcMain.on("log-in-button-clicked", () => {
-    const formData = createAuthPrompt(win);
-    console.log("login")
-  })
+app.whenReady().then(() => {
+  boot();
 
   // note: your contextMenu, Tooltip and Title code will go here!
+});
 
-})
-
-
+ 
 app.on('window-all-closed', () => {
-  app.quit();
+  // app.quit();
 });
 
 
+
+async function readFile(path: string, encoding?: BufferEncoding | null) {
+
+  try {
+    const data = await fs.promises.readFile(path, { encoding })
+    return data;
+  }
+  catch (err) {
+    console.error(err)
+    return null;
+  }
+}
+
+function createLoginEventListener(parentWindow: BrowserWindow) {
+  app.on("login", async (event, webContents, request, authInfo, callback) => {
+      console.log("login attempt");
+      event.preventDefault();
+        if(!triedAutoLogin) {
+          console.log("Auto login")
+          callback(preferences.username, preferences.password);
+          triedAutoLogin = true;
+        } else {
+          console.log("Failed Auto login")
+          const formData = await createAuthModal(parentWindow);
+          callback(formData.username, formData.password);
+        }
+        // loadCSS(parentWindow);
+  });
+}
+
+function loadCSS(win: BrowserWindow) {
+  fs.readFile(path.join(__dirname, 'public/mainStyle.css'), "utf8",(err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      win.webContents.send("getCSS", data);
+    }
+  });
+}
+
+async function loginOnBoot(win: BrowserWindow) {
+  try {
+    const file = await readFile(`${app.getPath("userData")}/preferences.json`, 'utf8');
+    if (typeof file === "string") {
+      preferences = JSON.parse(file);
+    }
+    const timeout = setTimeout(() => {
+      win.loadFile( path.join(__dirname, "./public/error.html") )
+    }, 5000)
+    await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
+    clearTimeout(timeout);
+
+  } catch(err) {
+
+    console.error(err);
+    const formData = await createAuthModal(win);
+    preferences = formData;
+
+    win.close();
+    boot();  
+  }
+}
+
+async function boot() {
+  
+  const win = createMainWindow();
+  createLoginEventListener(win);
+  await loginOnBoot(win);
+
+  app.on("open-file", async (event: any, path: string) => {
+    event.preventDefault();
+    const file = await readFile(path);
+    win.webContents.send("addFile", file)
+  });
+
+  ipcMain.on("log-in-button-clicked", async () => {
+    try {
+      const formData = await createAuthModal(win);
+      preferences = formData;
+      triedAutoLogin = false;
+      win.close();
+      boot();
+    } catch (err) {
+      console.error(err)
+    }
+  });
+}
