@@ -29,7 +29,7 @@ export async function createAuthModal(parent: BrowserWindow) {
     })
   
     return new Promise<any>(resolve => {
-        ipcMain.once("log-in-attempt", (event, formData: {username: string, password: string}) => {
+        ipcMain.once("log-in-attempt", (event, formData: object) => {
           
           resolve(formData);
           

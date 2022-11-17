@@ -1,6 +1,6 @@
 { 
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "outDir": "dist",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -10,7 +10,8 @@
     "removeComments": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true ,
-    "allowJs": true
+    "allowJs": true,
+    "downlevelIteration" : true
   },
   "include" : ["src"],
 }

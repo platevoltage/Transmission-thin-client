@@ -91,4 +91,6 @@ function swapIconWithBootstrap(elementName: string, className: string) {
   if (!element?.lastElementChild?.classList.contains("bi")) {
     element?.appendChild(icon);
   }
+
 }
+
