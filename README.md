@@ -11,6 +11,7 @@ Built with Electron, this app neatly packages your Transmission Web Interface in
 * [node.js](https://nodejs.dev) 
 * [electron.js](https://www.electronjs.org)
 * [Typescript](https://www.typescriptlang.org)
+* [Bootstrap Icons](https://icons.getbootstrap.com)
 
 ## Authors
 
