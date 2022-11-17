@@ -6,6 +6,8 @@ export const createMainWindow = () => {
     const win = new BrowserWindow({
       width: 1280,
       height: 720,
+      minHeight: 200,
+      minWidth: 600,
       title: "Transmission",
       frame: false,
       titleBarStyle: "hidden",
