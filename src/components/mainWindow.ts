@@ -32,6 +32,8 @@ export const createMainWindow = () => {
     win.on("close", () => {
         win.destroy();
         app.removeAllListeners("login");
+        app.removeAllListeners("open-file");
+        app.removeAllListeners("log-in-button-clicked");
         ipcMain.removeAllListeners("log-in-button-clicked");
     });
     return win 

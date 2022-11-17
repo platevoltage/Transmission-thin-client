@@ -16,7 +16,6 @@ app.whenReady().then(() => {
   boot();
 
   // note: your contextMenu, Tooltip and Title code will go here!
-
 });
 
  
@@ -65,11 +64,7 @@ function loadCSS(win: BrowserWindow) {
   });
 }
 
-async function boot() {
-  
-  const win = createMainWindow();
-  createLoginEventListener(win);
-
+async function loginOnBoot(win: BrowserWindow) {
   try {
     const file = await readFile(`${app.getPath("userData")}/preferences.json`, 'utf8');
     if (typeof file === "string") {
@@ -90,6 +85,13 @@ async function boot() {
     win.close();
     boot();  
   }
+}
+
+async function boot() {
+  
+  const win = createMainWindow();
+  createLoginEventListener(win);
+  await loginOnBoot(win);
 
   app.on("open-file", async (event: any, path: string) => {
     event.preventDefault();
@@ -98,7 +100,6 @@ async function boot() {
   });
 
   ipcMain.on("log-in-button-clicked", async () => {
-
     try {
       const formData = await createAuthModal(win);
       preferences = formData;
@@ -108,6 +109,5 @@ async function boot() {
     } catch (err) {
       console.error(err)
     }
-
   });
 }
