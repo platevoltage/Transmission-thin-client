@@ -6,47 +6,14 @@ import { createAuthModal } from './components/authModal';
 
 let triedAutoLogin = false;
 
-let preferences: {
-  ip: string,
+let preferences = {
+  ip: "",
   username: "",
   password: ""
 }
 
-app.whenReady().then(async () => {
-  const win = createMainWindow();
-  createLoginEventListener(win);
-
-  const file = await readFile(`${app.getPath("userData")}/preferences.json`, 'utf8');
-
-  console.log(file);
-  
-  if (typeof file === 'string') {
-      preferences = JSON.parse(file);
-      try {
-        const didLoad = await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
-      } catch(err) {
-        console.log(err)
-      }
-  } else {
-    const formData = await createAuthModal(win);
-    const didLoad = await win.loadURL(`http://${formData.ip}:9091/transmission/web/`);
-  }
-
-
-  win.on("ready-to-show", () => {
-    loadCSS(win);
-  });
-
-  app.on("open-file", async (event: any, path: string) => {
-    event.preventDefault();
-    const file = await readFile(path);
-    win.webContents.send("addFile", file)
-  });
-
-  ipcMain.on("log-in-button-clicked", () => {
-    const formData = createAuthModal(win);
-    console.log("login")
-  });
+app.whenReady().then(() => {
+  boot();
 
   // note: your contextMenu, Tooltip and Title code will go here!
 
@@ -54,7 +21,7 @@ app.whenReady().then(async () => {
 
  
 app.on('window-all-closed', () => {
-  app.quit();
+  // app.quit();
 });
 
 
@@ -76,13 +43,15 @@ function createLoginEventListener(parentWindow: BrowserWindow) {
       console.log("login attempt");
       event.preventDefault();
         if(!triedAutoLogin) {
-          callback(preferences.username || "", preferences.password || "");
+          console.log("Auto login")
+          callback(preferences.username, preferences.password);
           triedAutoLogin = true;
         } else {
+          console.log("Failed Auto login")
           const formData = await createAuthModal(parentWindow);
           callback(formData.username, formData.password);
         }
-        loadCSS(parentWindow);
+        // loadCSS(parentWindow);
   });
 }
 
@@ -93,5 +62,45 @@ function loadCSS(win: BrowserWindow) {
     } else {
       win.webContents.send("getCSS", data);
     }
+  });
+}
+
+async function boot() {
+  
+  const win = createMainWindow();
+  createLoginEventListener(win);
+  try {
+    const file = await readFile(`${app.getPath("userData")}/preferences.json`, 'utf8');
+    // const ses = win.webContents.session;
+
+    if (typeof file === "string") {
+      preferences = JSON.parse(file);
+    }
+    await win.loadURL(`http://${preferences.ip}:9091/transmission/web/`);
+  } catch(err) {
+
+    console.error(err);
+    const formData = await createAuthModal(win);
+    console.log(triedAutoLogin)
+    preferences = formData;
+
+    win.close();
+    boot();
+
+    
+  }
+
+  app.on("open-file", async (event: any, path: string) => {
+    event.preventDefault();
+    const file = await readFile(path);
+    win.webContents.send("addFile", file)
+  });
+  ipcMain.on("log-in-button-clicked", () => {
+    // const formData = createAuthModal(win);
+    // ses.closeAllConnections();
+    win.close();
+    boot();
+
+    // app.relaunch();
   });
 }
