@@ -22,6 +22,12 @@ body {
   background-color: var(--background);
 }
 
+#upload_confirm_button, #upload_cancel_button {
+  background-color: var(--dark-text) !important;
+  color: var(--main-text) !important;
+  border-radius: 5px !important;
+}
+
 input, select {
   background-color: var(--dark-text) !important;
   /* border: 1px solid #777777 !important; */
@@ -220,4 +226,9 @@ input:focus, select:focus {
 
 .low.selected, .normal.selected, .high.selected {
   background-color: var(--mid-text) !important;
+}
+
+.dialog_window, .dialog_heading {
+  background-color: var(--foreground) !important;
+  color: var(--main-text) !important;
 }
