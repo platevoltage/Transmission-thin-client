@@ -17,6 +17,7 @@ export const createMainWindow = () => {
       webPreferences: {
         // nodeIntegration: false,
         // contextIsolation: true,
+        enableBlinkFeatures: "CSSColorSchemeUARendering",
         devTools: false,
         preload: path.join(__dirname, 'mainWindowPreload.js')
       }

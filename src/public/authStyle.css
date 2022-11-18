@@ -5,9 +5,10 @@ body {
     border: none;
     background-color: #33333300;
     font-size: 14px;
+    overflow: hidden;
 }
 main {
-  
+    
     padding: 20px;
     background-color: #151515;
     border: none;
