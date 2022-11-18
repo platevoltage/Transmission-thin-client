@@ -15,10 +15,11 @@ export const createMainWindow = () => {
       webPreferences: {
         // nodeIntegration: false,
         // contextIsolation: true,
+        devTools: false,
         preload: path.join(__dirname, 'mainWindowPreload.js')
       }
     });
-  
+    win.removeMenu();
     win.on('page-title-updated', function(e) {
       e.preventDefault()
     });
