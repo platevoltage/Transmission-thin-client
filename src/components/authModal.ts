@@ -1,6 +1,10 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, safeStorage } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
+import bcrypt from 'bcrypt';
+import * as Store from 'electron-store';
+
+
 
 export async function createAuthModal(parent: BrowserWindow) {
   const authPromptWin = new BrowserWindow({
@@ -27,15 +31,33 @@ export async function createAuthModal(parent: BrowserWindow) {
     authPromptWin.once("close", () => {
       authPromptWin.destroy();
     })
+
+    interface FormData {
+      url: string;
+      username: string;
+      password: string;
+    }
   
     return new Promise<any>(resolve => {
-        ipcMain.once("log-in-attempt", (event, formData: object) => {
+        ipcMain.once("log-in-attempt", (event, formData: FormData) => {
           
           resolve(formData);
+          // let password = safeStorage.encryptString(formData.password);
+          store.set("url",formData.url)
+          store.set("username",formData.username)
+          const buffer = safeStorage.encryptString(formData.password);
+          store.set("password", buffer.toString('latin1'));
+
           
-          fs.writeFileSync(`${app.getPath("userData")}/preferences.json`, JSON.stringify(formData))
+          // fs.writeFileSync(`${app.getPath("userData")}/preferences.json`, JSON.stringify(preferenceData))
           authPromptWin.destroy();
         })
     })
     
   }
+
+  export const store = new Store<Record<string, string>>({
+    name: 'login',
+    watch: true,
+    encryptionKey: 'this_only_obfuscates',
+  });

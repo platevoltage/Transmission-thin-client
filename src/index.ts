@@ -1,8 +1,8 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, safeStorage } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { createMainWindow } from './components/mainWindow';
-import { createAuthModal } from './components/authModal';
+import { createAuthModal, store } from './components/authModal';
 
 
 
@@ -47,23 +47,27 @@ function createLoginEventListener(parentWindow: BrowserWindow) {
 
 async function loginOnBoot(win: BrowserWindow) {
   try {
-    const file = await readFile(`${app.getPath("userData")}/preferences.json`, 'utf8');
-    if (typeof file === "string") {
-      preferences = JSON.parse(file);
-    }
-    const timeout = setTimeout(() => {
-      win.loadFile( path.join(__dirname, "./public/error.html") )
-    }, 5000)
+
+    preferences.url = store.get("url");
+    preferences.username = store.get("username");
+    preferences.password = safeStorage.decryptString(Buffer.from(store.get("password"), 'latin1'));
+
+    // const timeout = setTimeout(() => {
+    //   win.loadFile( path.join(__dirname, "./public/error.html") )
+    // }, 5000)
     await win.loadURL(`${preferences.url}/transmission/web/`);
-    clearTimeout(timeout);
+    // clearTimeout(timeout);
 
   } catch(err) {
 
     console.error(err);
     const formData = await createAuthModal(win);
+
     preferences = formData;
 
-    win.close();
+    setTimeout(() => {
+      win.close();
+    },100)
     boot();  
   }
 }
@@ -72,6 +76,7 @@ async function boot() {
   
   const win = createMainWindow();
   createLoginEventListener(win);
+
   await loginOnBoot(win);
 
   app.on("open-file", async (event: any, path: string) => {
