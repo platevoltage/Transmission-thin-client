@@ -83,13 +83,17 @@ async function boot() {
       const formData = await createAuthModal(win);
       preferences = formData;
       triedAutoLogin = false;
-      win.close();
+      setTimeout(() => {
+        win.close();
+      },100)
       boot();
     } catch (err) {
       console.error(err)
     }
   });
   app.on('window-all-closed', () => {
-    // app.quit();
+    // setTimeout(() => {
+      app.quit();
+    // },1000)
   });
 }

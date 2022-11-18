@@ -9,8 +9,8 @@ export const createMainWindow = () => {
       minHeight: 200,
       minWidth: 600,
       title: "Transmission",
-      frame: false,
-      titleBarStyle: "hidden",
+      // frame: false,
+      // titleBarStyle: "hidden",
   
       webPreferences: {
         // nodeIntegration: false,
