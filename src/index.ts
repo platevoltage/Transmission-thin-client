@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, safeStorage } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, safeStorage } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import { createMainWindow } from './components/mainWindow';
@@ -17,6 +17,17 @@ let preferences = {
 app.whenReady().then(() => {
   const win = createMainWindow();
   boot(win);
+  const menu = Menu.buildFromTemplate([
+    {
+      label: app.name, 
+      submenu: [
+       { label: "Quit", role: 'quit' }
+      ]
+    }
+  ]);
+  Menu.setApplicationMenu(menu);
+
+  
 });
 
 async function readFile(path: string, encoding?: BufferEncoding | null) {
