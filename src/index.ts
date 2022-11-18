@@ -15,7 +15,8 @@ let preferences = {
 }
 
 app.whenReady().then(() => {
-  boot();
+  const win = createMainWindow();
+  boot(win);
 });
 
 async function readFile(path: string, encoding?: BufferEncoding | null) {
@@ -52,11 +53,9 @@ async function loginOnBoot(win: BrowserWindow) {
     preferences.username = store.get("username");
     preferences.password = safeStorage.decryptString(Buffer.from(store.get("password"), 'latin1'));
 
-    // const timeout = setTimeout(() => {
-    //   win.loadFile( path.join(__dirname, "./public/error.html") )
-    // }, 5000)
+
     await win.loadURL(`${preferences.url}/transmission/web/`);
-    // clearTimeout(timeout);
+
 
   } catch(err) {
 
@@ -65,16 +64,13 @@ async function loginOnBoot(win: BrowserWindow) {
 
     preferences = formData;
 
-    setTimeout(() => {
-      win.close();
-    },100)
-    boot();  
+    boot(win, true);  
   }
 }
 
-async function boot() {
+async function boot(win: BrowserWindow, reboot?: boolean) {
   
-  const win = createMainWindow();
+  if (reboot) await win.loadURL(`${preferences.url}/transmission/web/`);
   createLoginEventListener(win);
 
   await loginOnBoot(win);
@@ -90,17 +86,15 @@ async function boot() {
       const formData = await createAuthModal(win);
       preferences = formData;
       triedAutoLogin = false;
-      setTimeout(() => {
-        win.close();
-      },100)
-      boot();
+
+      boot(win, true);
     } catch (err) {
       console.error(err)
     }
   });
   app.on('window-all-closed', () => {
-    // setTimeout(() => {
-      app.quit();
-    // },1000)
+
+    app.quit();
+
   });
 }
