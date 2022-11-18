@@ -124,10 +124,9 @@ input:focus, select:focus {
 .torrent_footer {
   padding: 10px 0 10px 10px;
   /* margin: 0 !important; */
-  line-height: 0px;
-
 }
 .torrent_footer div {
+  line-height: 0px;
   background-color: var(--dark-text) !important;
   font-size: 16px;
   width: 40px !important;

@@ -2,6 +2,8 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 
+const isMac = process.platform === 'darwin';
+
 export const createMainWindow = () => {
     const win = new BrowserWindow({
       width: 1280,
@@ -9,8 +11,8 @@ export const createMainWindow = () => {
       minHeight: 200,
       minWidth: 600,
       title: "Transmission",
-      // frame: false,
-      // titleBarStyle: "hidden",
+      frame: !isMac,
+      titleBarStyle: isMac ? "hidden" : "default",
   
       webPreferences: {
         // nodeIntegration: false,

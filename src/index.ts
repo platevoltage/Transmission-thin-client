@@ -4,6 +4,8 @@ import * as fs from 'fs';
 import { createMainWindow } from './components/mainWindow';
 import { createAuthModal } from './components/authModal';
 
+
+
 let triedAutoLogin = false;
 
 let preferences = {
