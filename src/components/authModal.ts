@@ -1,7 +1,6 @@
 import { app, BrowserWindow, ipcMain, safeStorage } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
-import bcrypt from 'bcrypt';
 import * as Store from 'electron-store';
 
 
