@@ -82,6 +82,7 @@ input:focus, select:focus {
   font-weight: 500 !important;
 }
 
+
 #toolbar {
   padding-top: 26px !important;
   background-color: var(--foreground) !important;
@@ -89,11 +90,15 @@ input:focus, select:focus {
   color: #eeeeee !important;
   background-image: none !important;
   -webkit-app-region: drag;
+  line-height: 0px;
+  
 }
 
 #toolbar div {
   margin: 0 !important;
   background-image: none !important;
+  -webkit-app-region: no-drag;
+  padding-top: 3px !important;
 }
 #toolbar-open {
   padding-left: 20px !important;
@@ -119,6 +124,7 @@ input:focus, select:focus {
 .torrent_footer {
   padding: 10px 0 10px 10px;
   /* margin: 0 !important; */
+  line-height: 0px;
 
 }
 .torrent_footer div {
@@ -127,6 +133,7 @@ input:focus, select:focus {
   width: 40px !important;
   height: 20px !important;
   margin: 0 5px 0 5px !important;
+  padding-top: 5px !important;
   border-radius: 5px;
 }
 .torrent_footer div.selected {
@@ -170,10 +177,10 @@ input:focus, select:focus {
   background-color: var(--background);
 }
 
-[class^="bi-"]::before, [class*=" bi-"]::before {
+/* [class^="bi-"]::before, [class*=" bi-"]::before {
   vertical-align: text-center !important;
   
-}
+} */
 
 #torrent_inspector {
   padding: 50px 50px 50px 50px !important;

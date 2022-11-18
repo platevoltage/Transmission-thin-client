@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && rm -Rf dist/public && cp -R src/public dist/ && node --inspect=5858 ./node_modules/.bin/electron --remote-debugging-port=9222 .",
+    "start": "tsc && rm -Rf dist/public && cp -R src/public dist/ && electron --inspect=5858  --remote-debugging-port=9222 .",
     "make": "tsc && electron-builder -mwl --linux deb rpm"
   },
   "repository": {
