@@ -17,16 +17,6 @@ let preferences = {
 app.whenReady().then(() => {
   const win = createMainWindow();
   boot(win);
-  const menu = Menu.buildFromTemplate([
-    {
-      label: app.name, 
-      submenu: [
-       { label: "Quit", role: 'quit' }
-      ]
-    }
-  ]);
-  Menu.setApplicationMenu(menu);
-
   
 });
 
@@ -80,6 +70,16 @@ async function loginOnBoot(win: BrowserWindow) {
 }
 
 async function boot(win: BrowserWindow, reboot?: boolean) {
+
+  const menu = Menu.buildFromTemplate([
+    {
+      label: app.name, 
+      submenu: [
+       { label: "Quit", role: 'quit' }
+      ]
+    }
+  ]);
+  Menu.setApplicationMenu(menu);
   
   if (reboot) await win.loadURL(`${preferences.url}/transmission/web/`);
   createLoginEventListener(win);
