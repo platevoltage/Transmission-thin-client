@@ -1,0 +1,42 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "typescript",
+			"tsconfig": "tsconfig.json",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build",
+			"label": "tsc: build - tsconfig.json"
+		},    
+		{
+			"label": "clean",
+			"type": "shell",
+			"command": "rm",
+			"args": [
+				"-Rf",
+				"dist/public"
+			]
+		},
+		{
+			"label": "copy",
+			"type": "shell",
+			"command": "cp",
+			"args": [
+				"-R",
+				"src/public",
+				"dist/"
+			]
+		},
+		{
+			"label": "Build",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"tsc: build - tsconfig.json",
+				"clean",
+				"copy"
+			]
+		}
+	]
+}

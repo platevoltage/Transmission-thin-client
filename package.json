@@ -6,9 +6,10 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc && rm -Rf dist/public && cp -R src/public dist/ && electron --inspect=5858  --remote-debugging-port=9222 .",
-    "make": "tsc && electron-builder -mwl --linux deb rpm",
-    "make:mac": "tsc && electron-builder"
+    "build": "tsc && rm -Rf dist/public && cp -R src/public dist/",
+    "start": "npm run build && electron --inspect=5858  --remote-debugging-port=9222 .",
+    "make": "npm run build && electron-builder -mwl --linux deb rpm",
+    "make:mac": "npm run build && electron-builder"
   },
   "repository": {
     "type": "git",
