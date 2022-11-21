@@ -7,14 +7,22 @@ import { createAuthModal, store } from './components/authModal';
 
 
 let triedAutoLogin = false;
+let file: string | undefined;
 
 let preferences = {
   url: undefined,
   username: undefined,
   password: undefined
 }
+// listen for file open on boot
+app.on("open-file", async (event: any, path: string) => {
+  event.preventDefault();
+  file = await readFile(path);
+});
 
 app.whenReady().then(() => {
+
+  
   const win = createMainWindow();
   boot(win);
   
@@ -69,6 +77,21 @@ async function loginOnBoot(win: BrowserWindow) {
   }
 }
 
+function listenForFileOpen(win: BrowserWindow) {
+  if (file) {
+    win.webContents.send("addFile", file);
+    file = undefined;
+  }
+  //remove original listener and make a new one.
+  app.removeAllListeners("open-file")
+  app.on("open-file", async (event: any, path: string) => {
+    event.preventDefault();
+    file = await readFile(path);
+    win.webContents.send("addFile", file);
+    file = undefined;
+  });
+}
+
 async function boot(win: BrowserWindow, reboot?: boolean) {
 
   const menu = Menu.buildFromTemplate([
@@ -86,11 +109,8 @@ async function boot(win: BrowserWindow, reboot?: boolean) {
 
   await loginOnBoot(win);
 
-  app.on("open-file", async (event: any, path: string) => {
-    event.preventDefault();
-    const file = await readFile(path);
-    win.webContents.send("addFile", file)
-  });
+  listenForFileOpen(win);
+
 
   ipcMain.on("log-in-button-clicked", async () => {
     try {
