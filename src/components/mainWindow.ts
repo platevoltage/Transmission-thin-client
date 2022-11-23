@@ -13,25 +13,19 @@ export const createMainWindow = () => {
       title: "Transmission",
       frame: !isMac,
       titleBarStyle: isMac ? "hidden" : "default",
-  
       webPreferences: {
-        // nodeIntegration: false,
-        // contextIsolation: true,
         enableBlinkFeatures: "CSSColorSchemeUARendering",
         devTools: false,
         preload: path.join(__dirname, 'mainWindowPreload.js')
       }
     });
+    
     win.removeMenu();
     win.on('page-title-updated', function(e) {
       e.preventDefault()
     });
-
     win.on("ready-to-show", () => {
-        
         loadCSS(win);
-        
-            
     });
     win.on("close", () => {
         win.destroy();
@@ -41,6 +35,7 @@ export const createMainWindow = () => {
         app.removeAllListeners("window-all-closed");
         ipcMain.removeAllListeners("log-in-button-clicked");
     });
+
     return win 
 };
 

@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-// <meta name="color-scheme" content="light dark">
+
 ipcRenderer.on("getCSS", (_event, styleSheet) => {
 
     const head = document.querySelector('head');
@@ -18,7 +18,6 @@ ipcRenderer.on("getCSS", (_event, styleSheet) => {
     style.textContent = styleSheet;
     body!.appendChild(style);
     
-
     swapIconWithBootstrap("toolbar-open", "bi bi-folder2-open");
     swapIconWithBootstrap("toolbar-remove", "bi bi-x-circle");
     swapIconWithBootstrap("toolbar-start", "bi bi-play-circle");
@@ -42,12 +41,11 @@ ipcRenderer.on("getCSS", (_event, styleSheet) => {
 
     createLoginButton();
   
-
 });
+
 contextBridge.exposeInMainWorld("api", {
     login: () => ipcRenderer.send('log-in-button-clicked'),
 });
-
 
 document.addEventListener('dragover', (e) => {
   e.preventDefault();
