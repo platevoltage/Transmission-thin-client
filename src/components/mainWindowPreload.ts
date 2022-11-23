@@ -3,17 +3,19 @@ import { contextBridge, ipcRenderer } from 'electron';
 ipcRenderer.on("getCSS", (_event, styleSheet) => {
 
     const head = document.querySelector('head');
+    const body = document.querySelector('body');
+    
     const link = document.createElement('link');
     const meta = document.createElement('meta');
+    const style = document.createElement('style');
+    
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('href', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css')
     meta.setAttribute('name', 'color-scheme');
     meta.setAttribute('content', 'dark');
+    
     head!.appendChild(link);
     head!.appendChild(meta);
-
-    const body = document.querySelector('body');
-    const style = document.createElement('style');
 
     style.textContent = styleSheet;
     body!.appendChild(style);
