@@ -61,7 +61,7 @@ document.addEventListener('drop', (e: DragEvent) => {
   }
 });
 
-ipcRenderer.on("addFile", (e, data) => {
+ipcRenderer.on("addFile", (_e, data) => {
   const dataTransfer = new DataTransfer()
   const file = new File([data], "torrent.torrent")
   dataTransfer.items.add( file );
@@ -83,8 +83,8 @@ function createLoginButton() {
   const footer = document.getElementsByClassName('torrent_footer')[0];
   const button = document.createElement('div');
   button.setAttribute('id', 'login');
-  // button.setAttribute('onClick', '() => console.log("dsfsd)')
-  button.innerHTML = `<i class="bi bi-box-arrow-in-right"></i>`
+  button.innerHTML = `<i class="bi bi-box-arrow-in-right"></i>`;
+
   button.addEventListener('click', () => {
     ipcRenderer.send("log-in-button-clicked");
   })
@@ -94,10 +94,10 @@ function createLoginButton() {
 function swapIconWithBootstrap(elementName: string, className: string) {
   const element = document.getElementById(elementName);
   const icon = document.createElement('i');
-  icon.setAttribute("class", className)
+  icon.setAttribute("class", className);
+
   if (!element?.lastElementChild?.classList.contains("bi")) {
     element?.appendChild(icon);
   }
-
 }
 
